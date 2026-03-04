@@ -55,6 +55,7 @@ High-performance proxy subscription checker.
 - 📗 [通知渠道配置（Apprise）](https://github.com/sinspired/subs-check-pro/wiki/Notifications)
 - 📙 [订阅使用方法](https://github.com/sinspired/subs-check-pro/wiki/Subscriptions)
 - 📕 [内置文件服务](https://github.com/sinspired/subs-check-pro/wiki/File-Service)
+- 📖 [自建GitHub代理（支持提高api速率和gist加速）](https://github.com/sinspired/CF-Proxy)
 
 ### 📣 使用交流，功能讨论，issure 反馈，新版本通知
 
@@ -120,7 +121,8 @@ docker run -d \
 
 ### 🪜 优化系统代理和 GitHub 代理设置（可选）
 
-> 新增: 自动检测并设置系统代理;自动检测筛选 GitHub 代理并设置
+可使用网上公开的github proxy 或使用 GitHub 项目 [CF-Proxy](https://github.com/sinspired/CF-Proxy) 自建 GitHub 代理
+
 <details>
   <summary>展开查看</summary>
   
@@ -162,12 +164,14 @@ export HTTP_PROXY=socks5h://username:password@192.168.1.1:7890
 export HTTPS_PROXY=socks5h://username:password@192.168.1.1:7890
 ```
 
-如果想加速github的链接，可使用网上公开的github proxy，或者使用下方自建测速地址处的worker.js自建加速
+如果想加速github的链接，可使用网上公开的github proxy
+
+可使用 GitHub 项目 [CF-Proxy](https://github.com/sinspired/CF-Proxy) 自建 GitHub 代理，可直接复制 [worker.js](https://github.com/sinspired/CF-Proxy/blob/main/worker.js) 到 [Cloudflare](https://dash.cloudflare.com/) 的 workers。
 
 ```yaml
 # Github Proxy，获取订阅使用，结尾要带的 /
 # github-proxy: "https://ghfast.top/"
-github-proxy: "https://custom-domain/raw/"
+github-proxy: "https://proxy.custom-domain/"
 ```
 
 </details>
@@ -181,7 +185,8 @@ github-proxy: "https://custom-domain/raw/"
 
 1. 将 [worker.js](./doc/cloudflare/worker.js) 部署到 Cloudflare Workers。
 2. 绑定自定义域名（避免被节点屏蔽）。
-3. 在配置文件中设置 `speed-test-url` 为你的 Workers 地址：
+3. 在配置文件中设置 `speed-test-url` 为你的 Workers 地址。
+4. 建议使用 `speed-test-url: random` 使用随机测速地址，避免对单个测速源造成负担。
 
 ```yaml
 # 100MB
