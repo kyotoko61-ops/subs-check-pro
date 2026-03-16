@@ -38,25 +38,9 @@ jobs:
       # 注意：这里假设你的仓库里有一个默认的 config.yaml 模板
       # 如果没有，你需要创建一个，或者让程序首次运行自动生成（但自动生成需要交互，不适合CI）
       - name: 准备配置
-        run: |
-          mkdir -p ./config
-          # 如果仓库里已经有配置文件模板，可以复制过来
-          if [ -f "./config.yaml" ]; then
-            cp ./config.yaml ./config/config.yaml
-          else
-            # 如果没有，可以创建一个最简单的配置
-            # 这里需要根据你的实际需求填写，至少需要指定订阅链接
-            cat > ./config/config.yaml << EOF
-            # 基础配置示例 - 请根据实际情况修改
-            subscriptions:
-              - url: "https://example.com/subscribe.txt"  # 替换为你的订阅地址
-            output:
-              file: "./output/result.yaml"
-            # 其他配置项请参考项目文档
-            EOF
-          fi
-          echo "配置文件内容:"
-          cat ./config/config.yaml
+  run: |
+    mkdir -p ./config
+    cp ./config.yaml ./config/config.yaml
 
       # 步骤3：运行订阅检测
       - name: 执行检测
